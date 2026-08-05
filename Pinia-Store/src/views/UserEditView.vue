@@ -1,32 +1,34 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useMessageStore } from '@/stores/message'
+import type { User } from '@/types'
 
-const props = defineProps<{ id?: string | number }>()
+defineProps<{
+  user?: User
+  id?: string | number
+}>()
+
 const router = useRouter()
 const store = useMessageStore()
 
 const handleEdit = () => {
-  // 1. Set the flash message in state
-  store.updateMessage('Data has been updated')
+  // 1. Set the flash message
+  store.updateMessage('The update is in progress')
   
-  // 2. Automatically reset message after 3 seconds
+  // 2. Automatically reset message after 5 seconds
   setTimeout(() => {
     store.resetMessage()
-  }, 3000)
+  }, 5000)
 
-  // 3. Navigate back to details view
-  router.push({
-    name: 'user-detail',
-    params: { id: props.id }
-  })
+  // 3. Redirect to user list page
+  router.push({ name: 'event-list-view' })
 }
 </script>
 
 <template>
   <div class="user-edit">
     <h2>Edit User</h2>
-    <button @click="handleEdit">Edit</button>
+    <button @click="handleEdit">Update User Details</button>
   </div>
 </template>
 

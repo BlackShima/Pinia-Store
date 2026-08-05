@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { RouterView, RouterLink } from 'vue-router'
-import { useMessageStore } from './stores/message';
-import { storeToRefs } from 'pinia';
+import { useMessageStore } from './stores/message'
+import { storeToRefs } from 'pinia'
+
 const store = useMessageStore()
 const { message } = storeToRefs(store)
 </script>
@@ -9,7 +10,8 @@ const { message } = storeToRefs(store)
 <template>
   <div id="layout">
     <header>
-      <div id="flshMessage" v-if="message">
+      <!-- Fixed typo: id="flashMessage" -->
+      <div id="flashMessage" v-if="message">
         <h4>{{ message }}</h4>
       </div>
       <div>
@@ -17,7 +19,7 @@ const { message } = storeToRefs(store)
           <RouterLink to="/">Event</RouterLink> |
           <RouterLink to="/about">About</RouterLink> |
           <RouterLink to="/student">Student</RouterLink> |
-          <RouterLink to="/event/:id">URL</RouterLink>
+          <RouterLink to="/event/1">URL</RouterLink>
         </nav>
       </div>
       <h1>Users Directory</h1>
@@ -63,6 +65,11 @@ h2 {
   }
 }
 #flashMessage {
-  animation: yellowFade 3s ease-in-out;
+  animation: yellowFade 5s ease-in-out; /* Updated to 5s to match timeout */
+  background-color: #64B5F6;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 15px;
 }
 </style>

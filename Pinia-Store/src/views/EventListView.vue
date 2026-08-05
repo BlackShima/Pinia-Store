@@ -20,11 +20,18 @@ const props = defineProps({
   }
 })
 
-const pageSize = computed(() => props.AmountEvent)
-const page = computed(() => props.page)
+const pageSize = computed(() => Number(props.AmountEvent) || 3)
+const page = computed(() => Number(props.page) || 1)
 
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / pageSize.value)
+  const total = Number(totalEvents.value) || 0
+  const size = pageSize.value
+  
+  if (total === 0 && events.value) {
+    return events.value.length === size
+  }
+  
+  const totalPages = Math.ceil(total / size)
   return page.value < totalPages
 })
 
@@ -37,7 +44,7 @@ onMounted(() => {
     EventService.getEvents(pageSize.value, page.value)
       .then((response) => {
         events.value = response.data
-        totalEvents.value = parseInt(response.headers['x-total-count'] || '0')
+        totalEvents.value = parseInt(response.headers['x-total-count'] || response.headers['X-Total_Count'])
       })
       .catch(() => {
         router.push({ name: 'network-error' })
