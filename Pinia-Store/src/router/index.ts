@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import UserLayoutView from '@/views/UserLayoutView.vue'
+import UserDetailView from '@/views/UserDetailView.vue'
 import UserProfileView from '@/views/UserProfileView.vue'
 import UserPostsView from '@/views/UserPostsView.vue'
-import NotFoundView from '@/views/NotFoundView.vue'
-import ResourceNotFoundView from '@/views/ResourceNotFoundView.vue'
+import UserEditView from '@/views/UserEditView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,40 +11,57 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
     },
     {
-      path: '/users/:id',
-      name: 'user-layout',
-      component: UserLayoutView,
+      path: '/user/:id',
+      name: 'user-detail',
+      component: UserDetailView,
       props: true,
       children: [
         {
           path: '',
           name: 'user-profile',
-          component: UserProfileView,
-          props: true
+          component: UserProfileView
         },
         {
           path: 'posts',
           name: 'user-posts',
-          component: UserPostsView,
+          component: UserPostsView
+        },
+        {
+          path: 'edit',
+          name: 'user-edit',
+          component: UserEditView,
           props: true
         }
       ]
     },
     {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AboutView.vue'),
+    },
+    {
       path: '/404/:resource',
-      name: 'resource-not-found',
-      component: ResourceNotFoundView,
+      name: '404-resource',
+      component: () => import('../views/NotFoundView.vue'),
       props: true
     },
     {
-      path: '/:catchAll(.*)*',
+      path: '/:catchAll(.*)',
       name: 'not-found',
-      component: NotFoundView
+      component: () => import('../views/NotFoundView.vue')
+    },
+    {
+      path: '/network-error',
+      name: 'network-error',
+      component: () => import('../views/NetworkErrorView.vue')
     }
-  ]
+  ],
 })
 
 export default router

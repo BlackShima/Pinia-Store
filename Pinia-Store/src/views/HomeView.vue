@@ -1,59 +1,50 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import UserCard from '@/components/UserCard.vue'
+import UserServices from '@/services/UserServices'
 import type { User } from '@/types'
+import { onMounted, ref } from 'vue'
 
-const users = ref<User[]>([])
-const router = useRouter()
-const errorMessage = ref<string | null>(null)
+const users = ref<User[] | null>(null)
+const loading = ref(true)
 
-onMounted(async () => {
-  try {
-    const res = await fetch('https://jsonplaceholder.typicode.com/users')
-    if (!res.ok) {
-      router.push({ name: 'resource-not-found', params: { resource: 'users' } })
-      return
-    }
-    users.value = await res.json()
-  } catch (err) {
-    console.error('Network error:', err)
-    errorMessage.value = 'Your Network is so noob'
-  }
+onMounted (() => {
+  UserServices.getUsers()
+  .then((response) => {
+    users.value = response.data
+  })
+  .catch((error) => {
+    console.error('There was an error!', error)
+  })
+  .finally(() => {
+    loading.value = false
+  })
 })
-
-function goToDetail(id: number) {
-  router.push({ name: 'user-profile', params: { id } })
-}
 </script>
 
 <template>
-  <div class="user-list">
-    <h1>Users</h1>
-    <div v-if="errorMessage" class="error-box">
-      {{ errorMessage }}
+  <main class="home">
+    <div v-if="loading">
+      Loading users...
     </div>
-    <div 
-      v-for="user in users" 
-      :key="user.id" 
-      class="user-card"
-      @click="goToDetail(user.id)"
-    >
-      <h3>{{ user.name }}</h3>
-      <p>Email: {{ user.email }}</p>
-      <p>Company: {{ user.company.name }}</p>
+    <div v-else class="users">
+      <UserCard 
+        v-for="user in users" 
+        :key="user.id" 
+        :user="user" 
+      />
     </div>
-  </div>
+  </main>
 </template>
 
 <style scoped>
-.user-card {
-  border: 1px solid #ccc;
-  padding: 16px;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  cursor: pointer;
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.user-card:hover {
-  background-color: #f9f9f9;
+.users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

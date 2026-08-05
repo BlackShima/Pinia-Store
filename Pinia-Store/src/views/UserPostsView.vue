@@ -1,29 +1,56 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import UserServices from '@/services/UserServices'
 import type { Post } from '@/types'
 
-const props = defineProps<{ id: string }>()
+const route = useRoute()
 const posts = ref<Post[]>([])
+const loading = ref(true)
 
-onMounted(async () => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${props.id}`)
-  posts.value = await res.json()
+onMounted(() => {
+  const id = route.params.id as string
+  UserServices.getUserPosts(id)
+    .then((response) => {
+      posts.value = response.data
+    })
+    .catch((error) => {
+      console.error('Error fetching posts', error)
+    })
+    .finally(() => {
+      loading.value = false
+    })
 })
 </script>
 
 <template>
-  <div>
-    <h3>User Posts</h3>
-    <div v-for="post in posts" :key="post.id" class="post-item">
-      <h4>{{ post.title }}</h4>
-      <p>{{ post.body }}</p>
+  <div class="posts">
+    <h2>User Posts</h2>
+    <div v-if="loading">Loading posts...</div>
+    <div v-else class="post-list">
+      <div v-for="post in posts" :key="post.id" class="post-item">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.body }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.posts {
+  width: 100%;
+}
+.post-list {
+  display: flex;
+  flex-direction: column;
+}
 .post-item {
-  border-bottom: 1px solid #eee;
-  padding: 8px 0;
+  border: 1px solid #39495c;
+  padding: 15px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+.post-item h3 {
+  margin-top: 0;
 }
 </style>
