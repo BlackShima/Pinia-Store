@@ -3,7 +3,6 @@ import EventCard from '@/components/EventCard.vue'
 import type { Event } from '@/types'
 import { ref, onMounted, computed, watchEffect } from 'vue'
 import EventService from '@/services/EventService'
-import EventDetailCard from '@/components/EventDetailCard.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -30,15 +29,18 @@ const hasNextPage = computed(() => {
 })
 
 onMounted(() => {
-  events.value = null
   watchEffect(() => {
+    // Reset events while loading new page data
+    events.value = null
+    
+    // Pass pageSize.value dynamically instead of hardcoded 3
     EventService.getEvents(pageSize.value, page.value)
       .then((response) => {
         events.value = response.data
-        totalEvents.value = response.headers['x-total-count']
+        totalEvents.value = parseInt(response.headers['x-total-count'] || '0')
       })
       .catch(() => {
-        router.push({ name: 'network-error-view' })
+        router.push({ name: 'network-error' })
       })
   })
 })
@@ -52,14 +54,14 @@ onMounted(() => {
     <div class="pagination">
       <RouterLink
         id="page-prev"
-        :to="{ name: 'event-list-view', query: { page: page - 1, size: AmountEvent } }"
+        :to="{ name: 'event-list-view', query: { page: page - 1, size: pageSize } }"
         rel="prev"
         v-if="page != 1"
       >&#60; Prev Page</RouterLink>
 
       <RouterLink
         id="page-next"
-        :to="{ name: 'event-list-view', query: { page: page + 1, size: AmountEvent } }"
+        :to="{ name: 'event-list-view', query: { page: page + 1, size: pageSize } }"
         rel="next"
         v-if="hasNextPage"
       >Next Page &#62;</RouterLink>
