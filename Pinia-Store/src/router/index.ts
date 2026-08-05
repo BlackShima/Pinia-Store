@@ -55,9 +55,10 @@ const router = createRouter({
       },
       children: [
         {
-          path: '',
+          path: '/event/:id',
           name: 'event-detail-view',
-          component: EventDetailView
+          component: EventDetailView,
+          props: true
         },
         {
           path: 'register',
