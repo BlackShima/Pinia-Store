@@ -42,3 +42,6 @@ export interface Event {
     petsAllowed: boolean
     organizer: string
 }
+export interface EventState {
+  event: Event | null
+}
