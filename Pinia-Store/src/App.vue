@@ -12,6 +12,14 @@ const { message } = storeToRefs(store)
       <div id="flshMessage" v-if="message">
         <h4>{{ message }}</h4>
       </div>
+      <div>
+        <nav>
+          <RouterLink to="/">Event</RouterLink> |
+          <RouterLink to="/about">About</RouterLink> |
+          <RouterLink to="/student">Student</RouterLink> |
+          <RouterLink to="/event/:id">URL</RouterLink>
+        </nav>
+      </div>
       <h1>Users Directory</h1>
     </header>
     <main>
