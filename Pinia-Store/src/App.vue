@@ -30,7 +30,7 @@ const { message } = storeToRefs(store)
   </div>
 </template>
 
-<style>
+<style scoped>
 nav {
   padding: 30px;
 }
