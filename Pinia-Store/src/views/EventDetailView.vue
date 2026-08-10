@@ -7,14 +7,9 @@ defineProps<{
 </script>
 
 <template>
-  <div v-if="event" class="event-detail">
+  <div v-if="event" class="my-15">
     <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
     <p>{{ event.description }}</p>
   </div>
 </template>
 
-<style scoped>
-.event-detail {
-  margin-top: 15px;
-}
-</style>

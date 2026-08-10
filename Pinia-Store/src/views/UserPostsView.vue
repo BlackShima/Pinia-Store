@@ -24,12 +24,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="posts">
+  <div class="w-full">
     <h2>User Posts</h2>
     <div v-if="loading">Loading posts...</div>
-    <div v-else class="post-list">
-      <div v-for="post in posts" :key="post.id" class="post-item">
-        <h3>{{ post.title }}</h3>
+    <div v-else class="flex flex-col">
+      <div v-for="post in posts" :key="post.id" class="mb-{15px} border border-[#39495c] p-[15px] text-left">
+        <h3 class="mt-0">{{ post.title }}</h3>
         <p>{{ post.body }}</p>
       </div>
     </div>

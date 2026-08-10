@@ -1,24 +1,34 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { toRefs } from 'vue'
 import { type Event } from '@/types'
-import { useMessageStore } from '@/stores/message';
+import { useMessageStore } from '@/stores/message'
+
 const props = defineProps<{
-    event: Event
+  event: Event
 }>()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const { event } = toRefs(props)
+
 const router = useRouter()
 const store = useMessageStore()
+
 const register = () => {
-    store.updateMessage(`You are successfully registerd for the ${props.event.title}!`)
-    setTimeout(() => {
-        store.resetMessage()
-    }, 3000)
-    router.push({ name: 'event-detail-view', params: { id: props.event.id } })
+  store.updateMessage(`You are successfully registered for ${props.event.title}!`)
+  setTimeout(() => {
+    store.resetMessage()
+  }, 3000)
+  
+  router.push({ name: 'event-detail-view', params: { id: props.event.id } })
 }
 </script>
+
 <template>
-    <p>Register event here</p>
-    <button @click="register">Register</button>
+  <div class="my-4 text-center">
+    <p class="mb-4 text-gray-600">Register event here</p>
+    
+    <button 
+      @click="register"
+      class="rounded bg-[#42b983] px-4 py-2 font-bold text-white transition-colors duration-200 hover:bg-[#33a06f] active:scale-95 cursor-pointer"
+    >
+      Register
+    </button>
+  </div>
 </template>

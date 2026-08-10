@@ -26,18 +26,8 @@ const handleEdit = () => {
 </script>
 
 <template>
-  <div class="user-edit">
+  <div class="mt-5">
     <h2>Edit User</h2>
-    <button @click="handleEdit">Update User Details</button>
+    <button class="px-4 py-2 cursor-pointer" @click="handleEdit">Update User Details</button>
   </div>
 </template>
-
-<style scoped>
-.user-edit {
-  margin-top: 20px;
-}
-button {
-  padding: 8px 16px;
-  cursor: pointer;
-}
-</style>

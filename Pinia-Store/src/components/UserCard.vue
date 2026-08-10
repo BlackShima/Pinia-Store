@@ -6,8 +6,8 @@ defineProps<{
 </script>
 
 <template>
-    <router-link :to="{ name: 'user-detail', params: { id: user.id } }" class="user-card-link">
-        <div v-if="user" class="user-card">
+    <router-link :to="{ name: 'user-detail', params: { id: user.id } }" class="no-underline text-inherit">
+        <div v-if="user" class="w-[250px] border border-[#39495c] p-5 mb-[18px] text-left cursor-pointer transition-transform duration-200 hover:scale-[1.01] hover:shadow-[0_3px_12px_0_rgba(0,0,0,0.2)]">
             <h2>{{ user.name }}</h2>
             <p>Email: {{ user.email }}</p>
             <p>Company: {{ user.company.name }}</p>

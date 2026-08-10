@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router';
+
 const props = withDefaults (
     defineProps<{
         resource?: string
@@ -10,25 +12,9 @@ const props = withDefaults (
 </script>
 
 <template>
-    <div class="not-found">
+    <div class="flex flex-col items-center mt-[50px] text-center">
         <h1>Oops!</h1>
         <h3>The {{ props.resource }} you're looking for is not here.</h3>
-        <router-link :to="{ name: 'home' }">Back to the home page</router-link>
+        <RouterLink class="mt-5 text-[#2c3e50] font-bold underline inline-block" :to="{ name: 'home' }">Back to the home page</RouterLink>
     </div>
 </template>
-
-<style scoped>
-.not-found {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-    text-align: center;
-}
-.not-found a {
-    margin-top: 20px;
-    color: #2c3e50;
-    font-weight: bold;
-    text-decoration: underline;
-}
-</style>

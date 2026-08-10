@@ -22,11 +22,11 @@ onMounted (() => {
 </script>
 
 <template>
-  <main class="home">
+  <main class="flex flex-col items-center">
     <div v-if="loading">
       Loading users...
     </div>
-    <div v-else class="users">
+    <div v-else class="flex flex-col items-center">
       <UserCard 
         v-for="user in users" 
         :key="user.id" 
@@ -35,16 +35,3 @@ onMounted (() => {
     </div>
   </main>
 </template>
-
-<style scoped>
-.home {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.users {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-</style>
