@@ -17,6 +17,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "@types/nprogress": "^0.2.3",
+    "@vercel/speed-insights": "^2.0.0",
     "axios": "^1.19.0",
     "nprogress": "^0.2.0",
     "pinia": "^4.0.2",
