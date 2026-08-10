@@ -9,7 +9,7 @@ const { message } = storeToRefs(store)
 </script>
 
 <template>
-  <SpeedInsights /> //hello
+  <SpeedInsights />
   <div class="text-center font-sans text-gray-700 antialiased">
     <header>
       <div
