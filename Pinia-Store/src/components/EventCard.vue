@@ -8,8 +8,10 @@ defineProps<{
 
 <template>
   <RouterLink class="event-card event-link" :to="{ name: 'event-detail-view', params: { id: event.id } }">
-    <h2>{{ event.title }}</h2>
-    <span>@{{ event.time }} on {{ event.date }}</span>
+    <div class="cp-5 w-[250px] cursor-pointer border border-[#39495] mb-[18px hover:scale-101 hover:shadow-sp]">
+      <h2>{{ event.title }}</h2>
+      <span>@{{ event.time }} on {{ event.date }}</span>
+    </div>
   </RouterLink>
 </template>
 
